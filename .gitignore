@@ -1,0 +1,25 @@
+# Academic & Proprietary Lab Materials (Protected by Course Honor Code)
+Lab 3*
+Lab 4*
+Lab 5*
+Lab 6*
+Labs 1*
+Pentest OUTBRIEF*
+
+# Temporary Microsoft Office Files
+~$*.docx
+~$*.pptx
+*.tmp
+
+# Operating System Artifacts
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Python / Local Cache
+__pycache__/
+*.py[cod]
+*.class
+.venv/
+env/
