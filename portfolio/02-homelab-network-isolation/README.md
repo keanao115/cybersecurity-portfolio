@@ -39,6 +39,14 @@ graph TB
 
 ---
 
+### Node Verification Screenshots
+| Node: Kali Linux Attacker | Node: Legacy Linux Target | Node: Windows 11 Enterprise |
+| :---: | :---: | :---: |
+| ![Kali VM](images/01-kali-vm-interface.png) | ![Metasploitable](images/02-metasploitable-interface.png) | ![Windows 11](images/03-windows-vm-interface.png) |
+| *Figure 2.1: Kali Linux auditing interface* | *Figure 2.2: Metasploitable 2 node interface* | *Figure 2.3: Windows 11 client interface* |
+
+---
+
 ## 3. Network Isolation & Security Boundary Verification
 To guarantee complete isolation from the host's physical network:
 1. **Dedicated Host-Only Network Adapter:** Configured VirtualBox DHCP server on 192.168.56.100 with address scope 192.168.56.101 – 192.168.56.254 on subnet mask 255.255.255.0.
@@ -72,6 +80,15 @@ During active reconnaissance drills using Nmap, quantitative behavioral differen
 - ICMP Ping: Host immediately acknowledges ping sweeps.
 - OS Fingerprinting (-O): Accurately detects 'Microsoft Windows 11 / Windows Server 2022' with high confidence based on TCP window size, MSS, and TTL metrics.
 `
+
+---
+
+### Empirical Verification Telemetry
+![Ping Sweep](images/07-kali-ping-sweep.png)
+*Figure 2.4: Isolated subnet host discovery sweep confirming active Layer 2 nodes.*
+
+![TTL Response Comparison](images/09-ttl-response-comparison.png)
+*Figure 2.5: Quantitative ICMP Time-To-Live response comparison demonstrating Linux (TTL 64) vs Windows (TTL 128) kernel baselines.*
 
 ---
 

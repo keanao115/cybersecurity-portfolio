@@ -40,6 +40,16 @@ The authorized scope encompassed targeted evaluation of perimeter endpoints and 
   - **Unauthenticated Root Access:** Successful exploitation was achieved remotely without requiring valid domain or local user credentials.
   - **Interactive Session & Elevation:** The assessment team established an interactive reverse shell operating under uid=0(root) gid=0(root).
   - **Telemetry Evasion & Meterpreter Session:** The command shell was subsequently upgraded to an encrypted Meterpreter session, verifying that an attacker could stage post-exploitation toolkits, inspect active TCP sockets, and manipulate filesystem artifacts.
+#### Technical Exploitation Artifacts (EXT-01)
+![Samba usermap_script Root Exploit](images/01-samba-usermap-root-exploit.png)
+*Figure 4.1: Metasploit execution demonstrating unauthenticated remote root shell access via CVE-2007-2447.*
+
+![Meterpreter Session Upgrade](images/03-meterpreter-session-upgrade.png)
+*Figure 4.2: Upgrading interactive command shell to Meterpreter session for staged post-exploitation.*
+
+![Active Meterpreter Sessions](images/04-active-meterpreter-sessions-list.png)
+*Figure 4.3: Active session management showing established reverse TCP connections.*
+
 - **Business Risk:** **Critical.** Complete loss of confidentiality, integrity, and availability on the target host. Because this server supports operational manufacturing workflows, unauthorized code execution could halt operations, incurring estimated losses of **,000 per hour per server**.
 - **Strategic Remediation:**
   1. *Immediate:* Remove the username map script directive from /etc/samba/smb.conf and restart the daemon.
@@ -53,6 +63,16 @@ The authorized scope encompassed targeted evaluation of perimeter endpoints and 
 - **Verified Impact & Access Level Achieved:**
   - **Instant Shell Acquisition:** Triggering the authentication condition reliably opened the secondary port (6200/tcp), granting immediate root-level command execution.
   - **Comparative Daemon Analysis:** Analysis between sftpd and alternative FTP modules (such as ProFTPD mod_copy) demonstrated that while vsftpd provides immediate privilege, its predictable port listener (:6200) generates detectable telemetry compared to stealthier payload injection vectors.
+#### Technical Exploitation Artifacts (EXT-02)
+![vsftpd Exploit Module Selection](images/06-vsftpd-exploit-options.png)
+*Figure 4.4: Comparative analysis of FTP exploit modules within Kali Linux framework.*
+
+![vsftpd Backdoor Root Shell](images/07-vsftpd-backdoor-root-whoami.png)
+*Figure 4.5: Exploiting the vsftpd 2.3.4 backdoor to spawn an unauthenticated root command shell (whoami verification).*
+
+![vsftpd Netstat Port 6200](images/08-vsftpd-netstat-port-6200.png)
+*Figure 4.6: Socket inspection confirming listening backdoor session on TCP Port 6200.*
+
 - **Business Risk:** **Critical.** Legacy software distributions containing known historical trojans present an open gateway for total server compromise with zero exploitation complexity.
 - **Strategic Remediation:**
   1. *Immediate:* Immediately terminate and decommission the sftpd 2.3.4 service.
@@ -70,6 +90,21 @@ desktop, establishing an active graphical desktop session.
   - **Administrative Persistence:** Created unauthorized local backdoor accounts (
 et user [backdoor_user] [password] /add) and elevated them to the local Administrators security group (
 et localgroup administrators [backdoor_user] /add). Verified full token privileges via whoami /priv.
+#### Post-Exploitation & Persistence Artifacts (EXT-03)
+![Windows RDP Interactive Login Session](images/09-windows-rdp-login-session.png)
+*Figure 4.7: Interactive graphical desktop session established via rdesktop using recovered credentials.*
+
+| Security Control Disabled: Firewall | Security Control Disabled: Real-Time AV |
+| :---: | :---: |
+| ![Firewall Disabled](images/10-windows-defender-firewall-disabled.png) | ![Antivirus Disabled](images/11-windows-antivirus-realtime-disabled.png) |
+| *Figure 4.8: Circumventing Windows Firewall* | *Figure 4.9: Disabling real-time protection* |
+
+![Local Backdoor Accounts Created](images/16-net-user-backdoor-accounts-created.png)
+*Figure 4.10: Command execution provisioning persistent administrative backdoor user accounts via net user.*
+
+![Runas and whoami /priv Verification](images/17-runas-whoami-priv-verification.png)
+*Figure 4.11: Privilege verification confirming full administrator security token and privileges via whoami /priv.*
+
 - **Business Risk:** **High.** An adversary gaining endpoint administrative access can blind endpoint security visibility, stage ransomware or lateral movement toolsets, and maintain permanent persistent access even after transient connections are terminated.
 - **Strategic Remediation:**
   1. *Access Control:* Enforce mandatory Multi-Factor Authentication (MFA) across all Remote Desktop sessions and restrict RDP access exclusively to dedicated management jump boxes.

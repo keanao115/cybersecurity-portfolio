@@ -44,6 +44,10 @@ An unknown graphic file provided during intelligence gathering was analyzed to e
 +----------------------------------------------------------------------------------------------------+
 `
 
+### 3.2 Investigated Artifact Evidence
+![Investigated Digital Artifact](images/artifact-600x200.jpg)
+*Figure 1.1: Cryptographically verified digital artifact analyzed for forensic metadata and threat indicators.*
+
 ### 3.2 Threat Intelligence Correlation (VirusTotal Telemetry)
 The SHA-256 hash was queried against global threat intelligence repositories:
 - **Detection Ratio:** 0/72 security vendors flagged the file as malicious (benign benchmark artifact).
